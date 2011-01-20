@@ -1,6 +1,8 @@
 package com.heptafish.map
 {
 	
+	import Manager.GameManager;
+	
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.geom.Point;
@@ -173,7 +175,8 @@ package com.heptafish.map
 			_player.moveToY = event.currentTarget.mouseY;
 			var nowPoint:Point = new Point(_player.x, _player.y);
 			var targetPoint:Point = new Point(event.currentTarget.mouseX, event.currentTarget.mouseY);
-			
+		
+			GameManager.trace("角色从("+nowPoint.x+","+nowPoint.y+") 移动到"+"("+targetPoint.x+","+targetPoint.y+") ")
 			manWalk(_player, nowPoint, targetPoint);
 		}
 		
