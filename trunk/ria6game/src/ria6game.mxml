@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+ creationComplete="createHandler(event)">
+	<mx:Script>
+		<![CDATA[
+			import GamePlug.DebugVisual;
+			
+			import Manager.GameManager;
+			
+			import com.heptafish.map.Debuger;
+			import com.heptafish.map.GameMap;
+			import com.heptafish.map.HeptaFishCharacter;
+			import com.heptafish.map.ImageLoader;
+			import com.heptafish.map.MapLayer;
+			
+			import mx.managers.SystemManager;
+			
+			private var _mapXmlSrc:String;
+			private var _map:GameMap;
+			private var _plaerLoader:ImageLoader;
+			private var _player:HeptaFishCharacter;
+			private var _player2:HeptaFishCharacter; 
+			
+			public var Debug:DebugVisual=new DebugVisual()
+				
+			public var Ver:String="主程序版本 1.1.1.1"	
+			private function createHandler(evet:Event):void{
+				/**
+				 * 读取地图配置文件
+				 * */
+				//_mapXmlSrc = "data/maps/map_single.xml";//单一地图模式
+				_mapXmlSrc = "data/maps/map_grids.xml";//分块加载地图模式
+				var loader:URLLoader = new URLLoader(new URLRequest(_mapXmlSrc));
+				loader.addEventListener(Event.COMPLETE,initMap);
+			}
+			
+			private function initMap(evet:Event):void{
+				/**
+				 * 初始化地图
+				 * */
+				var mapXml:XML = new XML(evet.target.data);
+				
+				//定义人物初始化坐标
+				var manPoint:Point = new Point(400, 300);
+				
+				//定义游戏地图
+				_map = new GameMap(mapXml, this, manPoint);
+				mapCanvs.addChild(_map);
+				mapCanvs.addChild(Debug)
+				GameManager.trace=	Debug.trace
+					
+				GameManager.trace("调试面版打开")
+				GameManager.trace("Flex WebGame  Flex天界")
+				GameManager.trace(Ver)
+				
+				_plaerLoader = new ImageLoader();
+				_plaerLoader.load("images/woman.png");
+				
+				_plaerLoader.addEventListener(Event.COMPLETE,manLoaded);
+			}
+			private function proMap(evet:Event):void{
+				/**
+				 *初始化地图
+				 * */
+			}
+			private function manLoaded(evet:Event):void{
+				/**
+				 * 初始化人物
+				 * */
+				var _bitMap:Bitmap = new Bitmap(_plaerLoader. _data);
+				_player      = new HeptaFishCharacter(_bitMap,true,10,5,2,0,0,1,0);
+				_player.name = "player";
+				_map.addPlayer(_player);
+				_map.setControlPlayer(0);
+				_map.addEventListener(MouseEvent.CLICK,_map.onClick);
+				
+
+			}
+		]]>
+	</mx:Script>
+	<mx:Canvas x="0" y="0" id="mapCanvs" verticalScrollPolicy="auto" horizontalScrollPolicy="auto">
+	</mx:Canvas>
+</mx:Application>
