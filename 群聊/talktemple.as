@@ -43,7 +43,7 @@
 				btn1.visible=false
 				btn2.visible=true
 				log("服务器联接成功,点击发送按钮发送hello!")
-				sendInfo(0,"username")
+				sendInfo(0,"username")// 0表示登陆,登陆一次后不要再发送
 				}
 				
 		public function showConnERR(e:Event):void{
@@ -69,7 +69,7 @@
 				}
 			
 			public function sendtalk(e:Event):void{
-				sendInfo(5,"hello")
+				sendInfo(5,"hello")// 5表示发言,会广播到所有用户
 				}
 				
 				
