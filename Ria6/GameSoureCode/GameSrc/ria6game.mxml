@@ -104,7 +104,7 @@
 				_map.setControlPlayer(0);
 				_map.addEventListener(MouseEvent.CLICK,_map.onClick);
 				
-
+ 
 			}
 		]]>
 	</mx:Script>
