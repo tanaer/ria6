@@ -15,6 +15,8 @@
 			import com.heptafish.map.ImageLoader;
 			import com.heptafish.map.MapLayer;
 			
+			import comp.Talk.Taklpan;
+			
 			import mx.managers.SystemManager;
 			
 			private var _mapXmlSrc:String;
@@ -25,7 +27,7 @@
 			
 			public var Debug:DebugVisual=new DebugVisual()
 				
-			public var Ver:String="主程序版本 1.1.1.1"	
+			public var Ver:String="主程序版本 1.1.1.2"	
 			private function createHandler(evet:Event):void{
 				/**
 				 * 读取地图配置文件
@@ -35,6 +37,19 @@
 				var loader:URLLoader = new URLLoader(new URLRequest(_mapXmlSrc));
 				loader.addEventListener(Event.COMPLETE,initMap);
 			}
+			
+			//temp放
+			public function loadtalk():void{
+			var takpan:Taklpan=new Taklpan()
+			takpan.alpha=.6
+				
+			takpan.x=700
+			takpan.y=300
+			mapCanvs.addChild(takpan)
+			
+			}
+			
+			
 			
 			private function initMap(evet:Event):void{
 				/**
@@ -49,10 +64,12 @@
 				_map = new GameMap(mapXml, this, manPoint);
 				mapCanvs.addChild(_map);
 				mapCanvs.addChild(Debug)
+				loadtalk()	
+					
 				GameManager.trace=	Debug.trace
 					
 				GameManager.trace("调试面版打开")
-				GameManager.trace("Flex WebGame  Flex天界")
+				GameManager.trace("RIA 剑客开发小组")
 				GameManager.trace(Ver)
 				
 				_plaerLoader = new ImageLoader();
