@@ -52,10 +52,10 @@ package preload
 		{
 			//下载过程中。。。
 			tips.text = event.bytesLoaded +"/"+event.bytesTotal;
-			tips.x = (this.stage.stageWidth - tips.width) / 2;
-			tips.y = (this.stage.stageHeight - tips.height) / 2;
-			load.x = (this.stage.stageWidth - load.width) / 2;
-			load.y = (this.stage.stageHeight - load.height) / 2;
+			tips.x = (1000 - tips.width) / 2;
+			tips.y = (800 - tips.height) / 2;
+			load.x = (1000 - load.width) / 2;
+			load.y = (800 - load.height) / 2;
 		}
 		
 		private function initing(event:Event):void
