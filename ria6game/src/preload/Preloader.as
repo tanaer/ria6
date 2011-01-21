@@ -62,8 +62,8 @@ package preload
 		{
 			//初始化成功了
 			tips.text = "下载完成,系统初始化....";
-			tips.x = (this.stage.stageWidth - tips.width) / 2;
-			tips.y = (this.stage.stageHeight - tips.height) / 2;
+			tips.x = (1000 - tips.width) / 2;
+			tips.y = (800 - tips.height) / 2;
 		}
 		
 		private function FlexInitComplete(event:Event):void
