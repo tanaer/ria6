@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application 
+	preloader="preload.Preloader"
 	xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
  creationComplete="createHandler(event)">
 	<mx:Script>
