@@ -16,6 +16,7 @@
 			import comp.Talk.Taklpan;
 			import comp.Talk.loadpantool;
 			import mx.managers.SystemManager;
+			import mx.managers.CursorManager;
 			private var _mapXmlSrc:String;
 			private var _map:GameMap;
 			private var _plaerLoader:ImageLoader;
@@ -24,10 +25,13 @@
 			private var _player2:HeptaFishCharacter; 
 			private var _player4:HeptaFishCharacter; 
 			public var Debug:DebugVisual=new DebugVisual();
-			public var Ver:String="主程序版本 1.1.1.3.2"	;
+			public var Ver:String="主程序版本 1.1.1.3.3"	;
 			public var takpan:loadpantool;	
 			public var intNo:int=12;	
-			private function createHandler(evet:Event):void{
+			public var bo:Boolean=false;	
+			[Bindable] [Embed(source="images/cur1.png")]public var cur1:Class;
+			private function createHandler(evet:Event):void
+			{
 				trace(Ver)
 				/**
 				 * 读取地图配置文件
@@ -36,6 +40,12 @@
 				_mapXmlSrc = "data/maps/map_grids.xml";//分块加载地图模式
 				var loader:URLLoader = new URLLoader(new URLRequest(_mapXmlSrc));
 				loader.addEventListener(Event.COMPLETE,initMap);
+				setCur();
+			}
+			//setCur
+			public function setCur():void
+			{
+				CursorManager.setCursor(cur1); 
 			}
 			//temp放
 			public function loadtalk():void
@@ -47,7 +57,8 @@
 				mapCanvs.addChild(takpan)
 			}
 			//temp放
-			public function loadask():void{
+			public function loadask():void
+			{
 				takpan=new loadpantool("ria剑客试题.swf")
 				takpan.alpha=.9
 				takpan.x=350
@@ -56,7 +67,8 @@
 				mapCanvs.addChild(takpan)
 				
 			}
-			private function initMap(evet:Event):void{
+			private function initMap(evet:Event):void
+			{
 				/**
 				 * 初始化地图
 				 * */
@@ -118,11 +130,17 @@
 			{
 				intNo=12;
 			}
+			protected function button3_clickHandler(event:MouseEvent):void
+			{
+				bo=!bo;
+				bo?_player.moveTo(334,323):_player4.moveTo(534,523);
+			}
 		]]>
 	</mx:Script>
 	<mx:Canvas x="0" y="0" id="mapCanvs" verticalScrollPolicy="auto" horizontalScrollPolicy="auto">
 	</mx:Canvas>
 	<mx:Button x="136" y="4" label="试题测试" click="button1_clickHandler(event)"/>
 	<mx:Button x="214" y="4" label="碰撞测试" click="button2_clickHandler(event)"/>
+	<mx:Button x="292" y="4" label="行走测试" click="button3_clickHandler(event)"/>
 	<mx:Label id="labelTest" x="349" y="174" text="撞我这么给力，干嘛呢！" width="240" visible="false"/>
 </mx:Application>

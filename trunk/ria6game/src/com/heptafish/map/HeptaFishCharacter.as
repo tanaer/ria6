@@ -177,6 +177,7 @@ package com.heptafish.map
 		/**
 		 * 计算人物所在的第几个方向	
 		 * */
+		//听移
 		protected function onMove(evet:Event):void{
 			var __xspeed:Number = 10*Math.cos(_angle);
 			var __yspeed:Number = 10*Math.sin(_angle);
