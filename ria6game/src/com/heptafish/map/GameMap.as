@@ -140,20 +140,26 @@ package com.heptafish.map
 		/**
 		 * 设置控制角色
 		 **/
-		public function setControlPlayer(playerIndex:int = 0):void{
-			if(playerList.length > 0){
+		public function setControlPlayer(playerIndex:int = 0):void
+		{
+			if(playerList.length > 0)
+			{
 				_player = playerList[playerIndex];
 				_player.mapEle = this;
 				_player.x = _initPlayerPoint.x;
 				_player.y = _initPlayerPoint.y;
-			}else{
+			}
+			else
+			{
+				
 			}
 		}
 		
 		/**
 		 * 加入用户角色	
 		 * */
-		public function addPlayer(player:HeptaFishCharacter):void{
+		public function addPlayer(player:HeptaFishCharacter):void
+		{
 			playerList.push(player);
 			player.mapEle = this;
 			player.x = _initPlayerPoint.x;
@@ -163,13 +169,15 @@ package com.heptafish.map
 		/**
 		 * 地图层加载完成	
 		 * */
-		private function mapLayerLoaded(evet:Event):void{
+		private function mapLayerLoaded(evet:Event):void
+		{
 			
 		}
 		/**
 		 * 地图点击事件	
 		 * */
-		public function onClick(event:Event):void{
+		public function onClick(event:Event):void
+		{
 			
 			_player.moveToX = event.currentTarget.mouseX;
 			_player.moveToY = event.currentTarget.mouseY;
@@ -194,7 +202,8 @@ package com.heptafish.map
 			var __roleY:int = _roleRPoint.y;
 			var __length:int;
 			var maxP:Point = GameMapUtils.getMaxDirectPoint(_row,_col);
-			if(__nodeX>=0 && __nodeX<maxP.x && __nodeY>=0 && __nodeY<maxP.y && _roadSeeker.value(__nodeX, __nodeY)==0){
+			if(__nodeX>=0 && __nodeX<maxP.x && __nodeY>=0 && __nodeY<maxP.y && _roadSeeker.value(__nodeX, __nodeY)==0)
+			{
 				_roadArr =_roadSeeker.path8(new Point(__roleX, __roleY), new Point(__nodeX, __nodeY));
 				__length = _roadSeeker.path.length;
 				if(__length>0){
