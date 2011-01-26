@@ -74,13 +74,13 @@ package preload
 		
 		private function adjustDisplay():void{
 			if(stage!=null){
-				tips.x = (stage.width - tips.width) / 2;
-				tips.y = (stage.height - tips.height) / 2;
-				graphic_p.x = (stage.width - graphic_p.width) / 2 - 50;
-				graphic_p.y = (stage.height - graphic_p.height) / 2-15;
+				tips.x = (stage.stageWidth - tips.width) / 2;
+				tips.y = (stage.stageHeight - tips.height) / 2;
+				graphic_p.x = (stage.stageWidth - graphic_p.width) / 2 - 50;
+				graphic_p.y = (stage.stageHeight - graphic_p.height) / 2-15;
 				if(logo_loaded){
-					load.x = (stage.width - load.contentLoaderInfo.width) / 2;
-					load.y = (stage.height - load.contentLoaderInfo.height) / 2;
+					load.x = (stage.stageWidth - load.contentLoaderInfo.width) / 2;
+					load.y = (stage.stageHeight - load.contentLoaderInfo.height) / 2;
 				}
 			}
 		}
