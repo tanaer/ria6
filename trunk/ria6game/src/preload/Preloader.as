@@ -13,6 +13,7 @@ package preload
 	import flash.net.URLRequest;
 	import flash.system.LoaderContext;
 	import flash.text.TextField;
+	import flash.text.TextFormat;
 	import flash.utils.ByteArray;
 	
 	import mx.events.FlexEvent;
@@ -38,6 +39,10 @@ package preload
 			load = new Loader();
 			tips = new TextField();
 			graphic_p = new Sprite();
+			
+			var style:TextFormat = new TextFormat(null,null,0xff9900,null,null,null,null,null,"center");
+			tips.defaultTextFormat = style;
+
 			this.addChild(load);
 			this.addChild(graphic_p);
 			this.addChild(tips);
