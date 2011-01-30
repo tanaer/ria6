@@ -1,85 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application 
-	preloader="preload.Preloader"
-	xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
- creationComplete="createHandler(event)">
+<mx:Application preloader="preload.Preloader" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="createHandler(event)">
 	<mx:Script>
 		<![CDATA[
 			include "ria4/riaHit.as";//撞
+			include "ria4/ria3.as";//全局变量
+			include "ria4/ria9.as";//百人测试
+			include "ria4/riaLoader.as";//加载
 			import GamePlug.DebugVisual;
 			import Manager.GameManager;
 			import com.heptafish.map.Debuger;
 			import com.heptafish.map.GameMap;
 			import com.heptafish.map.HeptaFishCharacter;
+			import com.heptafish.map.HeptaFishCharacter2;
 			import com.heptafish.map.ImageLoader;
 			import com.heptafish.map.MapLayer;
 			import comp.Talk.Taklpan;
 			import comp.Talk.loadpantool;
+			import flash.system.Capabilities;
 			import mx.managers.CursorManager;
 			import mx.managers.SystemManager;
-			import flash.system.Capabilities;
 			private var _mapXmlSrc:String;
 			private var _map:GameMap;
 			private var _plaerLoader:ImageLoader;
-			private var _plaerLoader4:ImageLoader;
-			private var _plaerLoader5:ImageLoader;
-			private var _player:HeptaFishCharacter;
-			private var _player2:HeptaFishCharacter; 
-			private var _player4:HeptaFishCharacter; 
-			private var _player5:HeptaFishCharacter; 
+			private var _player:HeptaFishCharacter;//我
 			public var Debug:DebugVisual=new DebugVisual();
-			public var Ver:String="主程序版本 1.1.1.3.3"	;
+			public var Ver:String="主程序版本 1.1.1.3.4"	;
 			public var takpan:loadpantool;	
 			public var intNo:int=12;	
 			public var intGo:int=0;	
+			public var intGo100:int=0;	
 			public var intInterval:int=0;	
+			public var intInterval100:int=0;	
 			public var bo:Boolean=false;	
 			[Bindable] [Embed(source="images/cur1.png")]public var cur1:Class;
-			private function initMap(evet:Event):void
-			{
-				/**
-				 * 初始化地图 
-				 * */
-				var mapXml:XML = new XML(evet.target.data);
-				//定义人物初始化坐标
-				var manPoint:Point = new Point(400, 300);
-				//定义游戏地图
-				_map = new GameMap(mapXml, this, manPoint);
-				mapCanvs.addChild(_map);
-				Debug.y=60;	
-				mapCanvs.addChild(Debug)
-				loadtalk();
-				loadask();
-				GameManager.trace=	Debug.trace
-				//↓下一行，请大家用这样方式，并不要删除旧的，当有新改动时，只是注释之前的，以便留做记录。
-//				GameManager.trace("剑客开发小组 最新更新：广语言 时间：2011-1-26 19:23 主要改动：加入自定义光标");
-				GameManager.trace("剑客开发小组 最新更新：广语言 时间：2011-1-27 00:04 主要改动：加入多人与人的图片");
-				GameManager.trace(Ver)
-				//装载角色图片
-				_plaerLoader = new ImageLoader();
-				_plaerLoader.load("images/woman.png");
-				_plaerLoader.addEventListener(Event.COMPLETE,manLoaded);
-				//装载角色图片
-				_plaerLoader4 = new ImageLoader();
-				_plaerLoader4.load("images/woman4.png");
-				_plaerLoader4.addEventListener(Event.COMPLETE,manLoaded4);
-				//装载角色图片
-				_plaerLoader5 = new ImageLoader();
-				_plaerLoader5.load("images/woman5.png");
-				_plaerLoader5.addEventListener(Event.COMPLETE,manLoaded5);
-			}
 			private function createHandler(evet:Event):void
 			{
-				trace(Ver);
-				/**   
-				 * 读取地图配置文件
-				 * */
 				//_mapXmlSrc = "data/maps/map_single.xml";//单一地图模式
 				_mapXmlSrc = "data/maps/map_grids.xml";//分块加载地图模式
 				var loader:URLLoader = new URLLoader(new URLRequest(_mapXmlSrc));
 				loader.addEventListener(Event.COMPLETE,initMap);
 				setCur();
 			} 
+			private function initMap(evet:Event):void
+			{
+				var mapXml:XML = new XML(evet.target.data);//初始化地图 
+				var manPoint:Point = new Point(400, 300);//定义人物初始化坐标
+				_map = new GameMap(mapXml, this, manPoint);//定义游戏地图
+				mapCanvs.addChild(_map);
+				Debug.y=60;	
+				mapCanvs.addChild(Debug)
+//				loadtalk();
+				loadask();
+				GameManager.trace=	Debug.trace
+				//↓下一行，请大家用这样方式，并不要删除旧的，当有新改动时，只是注释之前的，以便留做记录。
+//				GameManager.trace("剑客开发小组 最新更新：广语言 时间：2011-1-26 19:23 主要改动：加入自定义光标;加入碰撞");
+//				GameManager.trace("剑客开发小组 最新更新：广语言 时间：2011-1-28 19:04 主要改动：加入一百个人");
+//				GameManager.trace("剑客开发小组 最新更新：广语言 时间：2011-1-29 01:44 主要改动：让一百个人随机走");
+				GameManager.trace("剑客开发小组 最新更新：广语言 时间：2011-1-31 00:28 主要改动：要先载入百人");
+				GameManager.trace(Ver)
+				//装载角色图片
+				_plaerLoader = new ImageLoader();
+				_plaerLoader.load("png/woman.png");
+				_plaerLoader.addEventListener(Event.COMPLETE,manLoaded);
+				//装载角色图片
+				
+			}
+			private function manLoaded(evet:Event):void
+			{
+				//初始化人物
+				var _bitMap:Bitmap = new Bitmap(_plaerLoader. _data);
+				_player= new HeptaFishCharacter(_bitMap,true,10,5,2,0,0,1,0);
+				_player.name = "player";//主角
+				_map.addPlayer(_player);
+				_map.setControlPlayer(0);//:::::::::?????????????/
+				_map.addEventListener(MouseEvent.CLICK,_map.onClick);
+			}
 			//setCur
 			public function setCur():void
 			{
@@ -107,52 +102,12 @@
 				takpan.y=100;
 				takpan.visible=false;
 				mapCanvs.addChild(takpan);
-				
 			}
-
 			private function proMap(evet:Event):void
 			{
 				/**
 				 *初始化地图
 				 * */
-			}
-			private function manLoaded(evet:Event):void
-			{
-				/**
-				 * 初始化人物
-				 * */
-				var _bitMap:Bitmap = new Bitmap(_plaerLoader. _data);
-				_player= new HeptaFishCharacter(_bitMap,true,10,5,2,0,0,1,0);
-				_player.name = "player";
-				_map.addPlayer(_player);
-				_map.setControlPlayer(0);
-				_map.addEventListener(MouseEvent.CLICK,_map.onClick);
-			}
-			private function manLoaded4(evet:Event):void
-			{
-				/**
-				 * 4
-				 * */
-				var _bitMap:Bitmap = new Bitmap(_plaerLoader4. _data);
-				_player4= new HeptaFishCharacter(_bitMap,true,10,5,2,0,0,1,0);
-				_player4.name = "player4";
-				_map.addPlayer(_player4);
-				this.addEventListener(Event.ENTER_FRAME,onHit);
-//				_map.setControlPlayer(0);
-//				_map.addEventListener(MouseEvent.CLICK,_map.onClick);
-			}
-			private function manLoaded5(evet:Event):void
-			{
-				/**
-				 * 5
-				 * */
-				var _bitMap:Bitmap = new Bitmap(_plaerLoader5. _data);
-				_player5= new HeptaFishCharacter(_bitMap,true,10,5,2,0,0,1,0);
-				_player5.name = "player5";
-				_map.addPlayer(_player5);
-				this.addEventListener(Event.ENTER_FRAME,onHit);
-//				_map.setControlPlayer(0);
-//				_map.addEventListener(MouseEvent.CLICK,_map.onClick);
 			}
 			protected function button1_clickHandler(event:MouseEvent):void
 			{
@@ -204,11 +159,77 @@
 						_player5.moveTo(intX*intGo*Math.random(),intY*intGo);
 						intGo=0;
 				}
-				
 			} 
 			protected function button5_clickHandler2(event:MouseEvent):void
 			{
 				clearInterval(intInterval);
+				_player5.stopCharacter();
+			}
+			protected function button100_clickHandler(event:MouseEvent):void
+			{
+				intInterval100=setInterval(button100Go,3000);
+			}
+			protected function button100Go():void
+			{
+				intGo100++;
+				switch(intGo)
+				{
+					case  0 :
+						button100(intGo100);
+						break;
+					case  1 :
+						button100(intGo100);
+						break;
+					case  2 :
+						button100(intGo100);
+						break;
+					case  3 :
+						button100(intGo100);
+						break;
+					case  4 :
+						button100(intGo100);
+						break;
+					case  5 :
+						button100(intGo100);
+						break;
+					case  6 :
+						button100(intGo100);
+						break;
+					default :
+//						trace ("默：");//默：
+						button100(intGo100);;
+						intGo100=0;
+				}
+			}
+			protected function button100(fNo:uint):void
+			{
+				var intX:int=200;
+				var intY:int=180;
+				var strPlayer:String="";
+				var intX2:int=0;
+				var intY2:int=0;
+				for(var i:uint=0;i<100;i++)
+				{
+					strPlayer="_player"+String(i);
+					intX2=intX*fNo*Math.random();
+					intY2=intY*fNo*Math.random();
+					GameManager.trace(intX2+intY2)
+					this[strPlayer].moveTo(intX2,intY2);
+				}
+			}
+			protected function button100_clickHandler2(event:MouseEvent):void
+			{
+				var strPlayer:String="";
+				clearInterval(intInterval100);
+				for(var i:uint=0;i<100;i++)
+				{
+					strPlayer="_player"+String(i);
+					this[strPlayer].stopCharacter();
+				}
+			}
+			protected function button100_clickHandler3(event:MouseEvent):void
+			{
+				funLoader();// 非主角
 			}
 		]]>
 	</mx:Script>
@@ -219,5 +240,8 @@
 	<mx:Button x="292" y="4" label="行走测试" click="button4_clickHandler(event)"/>
 	<mx:Button x="370" y="4" label="自由行走" click="button5_clickHandler(event)"/>
 	<mx:Button x="448" y="4" label="自由不走" click="button5_clickHandler2(event)"/>
+	<mx:Button x="526" y="4" label="百人测试" click="button100_clickHandler(event)"/>
+	<mx:Button x="604" y="4" label="百人不走" click="button100_clickHandler2(event)"/>
+	<mx:Button x="782" y="4" label="先载入百人" click="button100_clickHandler3(event)"/>
 	<mx:Label id="labelTest" x="349" y="174" text="撞我这么给力，干嘛呢！" width="240" visible="false"/>
 </mx:Application>
